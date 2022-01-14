@@ -39,7 +39,7 @@ const onInput = async e => {
 
         option.classList.add('dropdown-item');
         option.innerHTML = `
-            <img src="${movie.imgsrc}" />
+            <img src="${imgsrc}" />
             ${movie.Title}
         `;
 
@@ -48,3 +48,7 @@ const onInput = async e => {
 };
 
 input.addEventListener('input', debounce(onInput));
+
+document.addEventListener('click', e => {
+    console.log(e.target);
+});
