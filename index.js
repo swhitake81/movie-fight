@@ -1,14 +1,10 @@
-createAutoComplete({
-    root: document.querySelector('.autocomplete'),
+const autoCompleteConfig = {
     renderOption(movie) {
         const imgsrc = movie.Poster === 'N/A' ? '' : movie.Poster;
         return `
             <img src="${imgsrc}" />
             ${movie.Title} (${movie.Year})
         `;
-    },
-    onOptionSelect(movie) {
-        onMovieSelect(movie);
     },
     inputValue(movie) {
         return movie.Title
@@ -25,19 +21,66 @@ createAutoComplete({
         }
         return response.data.Search;
     }
+};
+
+createAutoComplete({
+    ...autoCompleteConfig,
+    root: document.querySelector('#left-autocomplete'),
+    onOptionSelect(movie) {
+        document.querySelector('.tutorial').classList.add('is-hidden')
+        onMovieSelect(movie, document.querySelector('#left-summary'), 'left');
+    }
 });
 
-const onMovieSelect = async movie => {
+createAutoComplete({
+    ...autoCompleteConfig,
+    root: document.querySelector('#right-autocomplete'),
+    onOptionSelect(movie) {
+        document.querySelector('.tutorial').classList.add('is-hidden')
+        onMovieSelect(movie, document.querySelector('#right-summary'), 'right');
+    }
+});
+
+let leftMovie;
+let rightMovie;
+
+const onMovieSelect = async (movie, summaryElement, side) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: {
             apikey: '797b0801',
             i: movie.imdbID
         }
     });
-    document.querySelector('#summary').innerHTML = movieTemplate(response.data);
+
+    summaryElement.innerHTML = movieTemplate(response.data);
+
+    if (side === 'left') {
+        leftMovie = response.data;
+    } else {
+        rightMovie = response.data;
+    }
+
+    if (leftMovie && rightMovie) {
+        runComparison()
+    }
 };
 
-const movieTemplate = movieDetail => { 
+const runComparison = () => {
+    console.log('time for comparison!');
+};
+
+const movieTemplate = (movieDetail) => { 
+    const dollars = parseInt(
+        movieDetail.boxOffice.replace(/\$/g, '').replace(/,/g,'')
+    );
+    const metascore = parseInt(movieDetail.Metascore);
+    const rating = parseFloat(movieDetail.imdbRating);
+    const votes = parseInt(
+        movieDetail.imdbVotes.replace(/,/g, '')
+    );
+
+
+
     return `
         <article class="media">
             <figure class="media-left">
