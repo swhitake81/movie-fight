@@ -1,0 +1,28 @@
+{
+  "name": "movie-fight",
+  "version": "1.0.0",
+  "description": "Movie fight is an ongoing project that will eventually be a web app takes two movies data from omdbapi.com, and compares them, showing which movies beat out what based on different catagories such as overall rating, gross revenue, etc. Vanilla JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swhitake81/movie-fight.git"
+  },
+  "author": "swhitake81",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swhitake81/movie-fight/issues"
+  },
+  "homepage": "https://github.com/swhitake81/movie-fight#readme",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^17.0.19",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
+  }
+}
